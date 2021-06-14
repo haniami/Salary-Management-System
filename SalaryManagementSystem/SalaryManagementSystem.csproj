@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -53,6 +60,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -127,11 +136,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="AdminHomePage.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="ExistingEmployee.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -142,6 +153,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="NewClaim.aspx" />
+    <Content Include="NewEmployee.aspx" />
+    <Content Include="NewEmployeeSaved.aspx" />
+    <Content Include="page1Admin.aspx" />
+    <Content Include="page1User.aspx" />
+    <Content Include="Printpayslip.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -171,12 +188,34 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="SMSModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SMSModel.edmx</DependentUpon>
+      <LastGenOutput>SMSModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SMSModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SMSModel.edmx</DependentUpon>
+      <LastGenOutput>SMSModel.cs</LastGenOutput>
+    </Content>
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Addition.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminHomePage.aspx.cs">
+      <DependentUpon>AdminHomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminHomePage.aspx.designer.cs">
+      <DependentUpon>AdminHomePage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -193,6 +232,9 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Deduction.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -200,10 +242,68 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Department.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employee.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExistingEmployee.aspx.cs">
+      <DependentUpon>ExistingEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExistingEmployee.aspx.designer.cs">
+      <DependentUpon>ExistingEmployee.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="NewClaim.aspx.cs">
+      <DependentUpon>NewClaim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewClaim.aspx.designer.cs">
+      <DependentUpon>NewClaim.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewEmployee.aspx.cs">
+      <DependentUpon>NewEmployee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewEmployee.aspx.designer.cs">
+      <DependentUpon>NewEmployee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewEmployeeSaved.aspx.cs">
+      <DependentUpon>NewEmployeeSaved.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewEmployeeSaved.aspx.designer.cs">
+      <DependentUpon>NewEmployeeSaved.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="page1Admin.aspx.cs">
+      <DependentUpon>page1Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="page1Admin.aspx.designer.cs">
+      <DependentUpon>page1Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="page1User.aspx.cs">
+      <DependentUpon>page1User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="page1User.aspx.designer.cs">
+      <DependentUpon>page1User.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Printpayslip.aspx.cs">
+      <DependentUpon>Printpayslip.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Printpayslip.aspx.designer.cs">
+      <DependentUpon>Printpayslip.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Salary.cs">
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -213,12 +313,29 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="SMSModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMSModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMSModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMSModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMSModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
@@ -230,12 +347,22 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <EntityDeploy Include="SMSModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SMSModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="SMSModel.edmx.diagram">
+      <DependentUpon>SMSModel.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

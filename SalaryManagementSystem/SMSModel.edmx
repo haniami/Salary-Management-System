@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SMS_DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addition">
+          <Key>
+            <PropertyRef Name="Addition_ID" />
+          </Key>
+          <Property Name="Addition_ID" Type="int" Nullable="false" />
+          <Property Name="Allowance" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Claim" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Bonus" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Salary_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Deduction">
+          <Key>
+            <PropertyRef Name="Deduction_ID" />
+          </Key>
+          <Property Name="Deduction_ID" Type="int" Nullable="false" />
+          <Property Name="Loan" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Tax" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="Absent" Type="int" />
+          <Property Name="Holiday_Fullday" Type="int" />
+          <Property Name="Holiday_Halfday" Type="int" />
+          <Property Name="EPF" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="SOCSO" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="Salary_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_ID" />
+          </Key>
+          <Property Name="Department_ID" Type="int" Nullable="false" />
+          <Property Name="Department_Name" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="text" Nullable="false" />
+          <Property Name="Password" Type="text" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
+          <Property Name="Address" Type="text" Nullable="false" />
+          <Property Name="Phone" Type="text" Nullable="false" />
+          <Property Name="Email" Type="text" Nullable="false" />
+          <Property Name="Department_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salary">
+          <Key>
+            <PropertyRef Name="Salary_ID" />
+          </Key>
+          <Property Name="Salary_ID" Type="int" Nullable="false" />
+          <Property Name="Salary_Amout" Type="float" Nullable="false" />
+          <Property Name="Net_Salary" Type="float" Nullable="false" />
+          <Property Name="Employee_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="Addition_fk0">
+          <End Role="Salary" Type="Self.Salary" Multiplicity="1" />
+          <End Role="Addition" Type="Self.Addition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salary">
+              <PropertyRef Name="Salary_ID" />
+            </Principal>
+            <Dependent Role="Addition">
+              <PropertyRef Name="Salary_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Deduction_fk0">
+          <End Role="Salary" Type="Self.Salary" Multiplicity="1" />
+          <End Role="Deduction" Type="Self.Deduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salary">
+              <PropertyRef Name="Salary_ID" />
+            </Principal>
+            <Dependent Role="Deduction">
+              <PropertyRef Name="Salary_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_fk0">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Department_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Salary_fk0">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Salary" Type="Self.Salary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Salary">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMS_DatabaseModelStoreContainer">
+          <EntitySet Name="Addition" EntityType="Self.Addition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deduction" EntityType="Self.Deduction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salary" EntityType="Self.Salary" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Addition_fk0" Association="Self.Addition_fk0">
+            <End Role="Salary" EntitySet="Salary" />
+            <End Role="Addition" EntitySet="Addition" />
+          </AssociationSet>
+          <AssociationSet Name="Deduction_fk0" Association="Self.Deduction_fk0">
+            <End Role="Salary" EntitySet="Salary" />
+            <End Role="Deduction" EntitySet="Deduction" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_fk0" Association="Self.Employee_fk0">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="Salary_fk0" Association="Self.Salary_fk0">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Salary" EntitySet="Salary" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SMS_DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Addition">
+          <Key>
+            <PropertyRef Name="Addition_ID" />
+          </Key>
+          <Property Name="Addition_ID" Type="Int32" Nullable="false" />
+          <Property Name="Allowance" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Claim" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Bonus" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Salary_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Salary" Relationship="Self.Addition_fk0" FromRole="Addition" ToRole="Salary" />
+        </EntityType>
+        <EntityType Name="Deduction">
+          <Key>
+            <PropertyRef Name="Deduction_ID" />
+          </Key>
+          <Property Name="Deduction_ID" Type="Int32" Nullable="false" />
+          <Property Name="Loan" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Tax" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="Absent" Type="Int32" />
+          <Property Name="Holiday_Fullday" Type="Int32" />
+          <Property Name="Holiday_Halfday" Type="Int32" />
+          <Property Name="EPF" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="SOCSO" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="Salary_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Salary" Relationship="Self.Deduction_fk0" FromRole="Deduction" ToRole="Salary" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_ID" />
+          </Key>
+          <Property Name="Department_ID" Type="Int32" Nullable="false" />
+          <Property Name="Department_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_fk0" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Self.Employee_fk0" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Salaries" Relationship="Self.Salary_fk0" FromRole="Employee" ToRole="Salary" />
+        </EntityType>
+        <EntityType Name="Salary">
+          <Key>
+            <PropertyRef Name="Salary_ID" />
+          </Key>
+          <Property Name="Salary_ID" Type="Int32" Nullable="false" />
+          <Property Name="Salary_Amout" Type="Double" Nullable="false" />
+          <Property Name="Net_Salary" Type="Double" Nullable="false" />
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Additions" Relationship="Self.Addition_fk0" FromRole="Salary" ToRole="Addition" />
+          <NavigationProperty Name="Deductions" Relationship="Self.Deduction_fk0" FromRole="Salary" ToRole="Deduction" />
+          <NavigationProperty Name="Employee" Relationship="Self.Salary_fk0" FromRole="Salary" ToRole="Employee" />
+        </EntityType>
+        <Association Name="Addition_fk0">
+          <End Role="Salary" Type="Self.Salary" Multiplicity="1" />
+          <End Role="Addition" Type="Self.Addition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salary">
+              <PropertyRef Name="Salary_ID" />
+            </Principal>
+            <Dependent Role="Addition">
+              <PropertyRef Name="Salary_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Deduction_fk0">
+          <End Role="Salary" Type="Self.Salary" Multiplicity="1" />
+          <End Role="Deduction" Type="Self.Deduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salary">
+              <PropertyRef Name="Salary_ID" />
+            </Principal>
+            <Dependent Role="Deduction">
+              <PropertyRef Name="Salary_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_fk0">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Department_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Salary_fk0">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Salary" Type="Self.Salary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Salary">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMS_DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Additions" EntityType="Self.Addition" />
+          <EntitySet Name="Deductions" EntityType="Self.Deduction" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Salaries" EntityType="Self.Salary" />
+          <AssociationSet Name="Addition_fk0" Association="Self.Addition_fk0">
+            <End Role="Salary" EntitySet="Salaries" />
+            <End Role="Addition" EntitySet="Additions" />
+          </AssociationSet>
+          <AssociationSet Name="Deduction_fk0" Association="Self.Deduction_fk0">
+            <End Role="Salary" EntitySet="Salaries" />
+            <End Role="Deduction" EntitySet="Deductions" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_fk0" Association="Self.Employee_fk0">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Salary_fk0" Association="Self.Salary_fk0">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Salary" EntitySet="Salaries" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SMS_DatabaseModelStoreContainer" CdmEntityContainer="SMS_DatabaseEntities">
+          <EntitySetMapping Name="Additions">
+            <EntityTypeMapping TypeName="SMS_DatabaseModel.Addition">
+              <MappingFragment StoreEntitySet="Addition">
+                <ScalarProperty Name="Addition_ID" ColumnName="Addition_ID" />
+                <ScalarProperty Name="Allowance" ColumnName="Allowance" />
+                <ScalarProperty Name="Claim" ColumnName="Claim" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Salary_ID" ColumnName="Salary_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deductions">
+            <EntityTypeMapping TypeName="SMS_DatabaseModel.Deduction">
+              <MappingFragment StoreEntitySet="Deduction">
+                <ScalarProperty Name="Deduction_ID" ColumnName="Deduction_ID" />
+                <ScalarProperty Name="Loan" ColumnName="Loan" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="Absent" ColumnName="Absent" />
+                <ScalarProperty Name="Holiday_Fullday" ColumnName="Holiday_Fullday" />
+                <ScalarProperty Name="Holiday_Halfday" ColumnName="Holiday_Halfday" />
+                <ScalarProperty Name="EPF" ColumnName="EPF" />
+                <ScalarProperty Name="SOCSO" ColumnName="SOCSO" />
+                <ScalarProperty Name="Salary_ID" ColumnName="Salary_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="SMS_DatabaseModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Department_ID" ColumnName="Department_ID" />
+                <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="SMS_DatabaseModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Department_ID" ColumnName="Department_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salaries">
+            <EntityTypeMapping TypeName="SMS_DatabaseModel.Salary">
+              <MappingFragment StoreEntitySet="Salary">
+                <ScalarProperty Name="Salary_ID" ColumnName="Salary_ID" />
+                <ScalarProperty Name="Salary_Amout" ColumnName="Salary_Amout" />
+                <ScalarProperty Name="Net_Salary" ColumnName="Net_Salary" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
